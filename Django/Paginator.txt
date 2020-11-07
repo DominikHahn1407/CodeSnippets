@@ -1,0 +1,43 @@
+{% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a class="btn btn-outline-secondary mb-4" href="?page=1">1</a>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                {% if num|add:-1 > 1 %}
+                    {% if num|add:-2 > 1 %}
+                        {% if num|add:-3 > 1 %}
+                            <a class="btn btn-outline-secondary mb-4" href="#">...</a>
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:-2 }}">{{ num|add:-2 }}</a>
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:-1 }}">{{ num|add:-1 }}</a>
+                        {% else %}
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:-2 }}">{{ num|add:-2 }}</a>
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:-1 }}">{{ num|add:-1 }}</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:-1 }}">{{ num|add:-1 }}</a>
+                    {% endif %}
+                {% endif %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% if num|add:1 < page_obj.paginator.num_pages %}
+                    {% if num|add:2 < page_obj.paginator.num_pages %}
+                        {% if num|add:3 < page_obj.paginator.num_pages %}
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:1 }}">{{ num|add:1 }}</a>
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:2 }}">{{ num|add:2 }}</a>
+                            <a class="btn btn-outline-secondary mb-4" href="#">...</a>
+                        {% else %}
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:1 }}">{{ num|add:1 }}</a>
+                            <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:2 }}">{{ num|add:2 }}</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-outline-secondary mb-4" href="?page={{ num|add:1 }}">{{ num|add:1 }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    {% endif %}
